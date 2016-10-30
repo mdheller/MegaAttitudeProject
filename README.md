@@ -1,4 +1,4 @@
-# MegaAttitude dataset
+# The MegaAttitude dataset
 
 **Authors:** Aaron Steven White and Kyle Rawlins
 
