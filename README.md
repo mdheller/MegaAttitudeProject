@@ -1,8 +1,11 @@
 # MegaAttitude dataset
 
 **Authors:** Aaron Steven White and Kyle Rawlins
+
 **Contact:** {aswhite,kgr}@jhu.edu
+
 **Version:** 1.0
+
 **Release date:** Oct 30, 2016
 
 ## Overview
