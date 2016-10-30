@@ -10,7 +10,7 @@
 
 ## Overview
 
-This data set consists of ordinal acceptability judgments for ~1000 clause-embedding verbs of English—with 50 surface-syntactic frames per verb, 5 observations per verb-frame pair.  For a detailed description of the data set as well as details of the item construction and collection methods, please see the following paper:
+This data set consists of ordinal acceptability judgments for ~1000 clause-embedding verbs of English — with 50 surface-syntactic frames per verb, 5 observations per verb-frame pair.  The data was collected on Amazon's Mechanical Turk using [Turktools](http://turktools.net/).  For a detailed description of the data set, the item construction and collection methods, and discussion of how to use a data set on this scale to address questions in linguistic theory, please see the following paper:
 
 White, A. S. & K. Rawlins. 2016. [A computational model of S-selection](http://aswhite.net/media/papers/white_computational_2016_salt.pdf). In M. Moroney, C-R. Little, J. Collard & D. Burgdorf (eds.), *Semantics and Linguistic Theory* 26, 641-663. Ithaca, NY: CLC Publications.
 
