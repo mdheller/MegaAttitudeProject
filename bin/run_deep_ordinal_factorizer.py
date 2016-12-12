@@ -38,4 +38,4 @@ class DeepOrdinalFactorizerExperiment(Experiment):
             m.write_params(directory)
         
 if __name__ == '__main__':
-    exp = DeepOrdinalFactorizerExperiment(data_dir='megaattitude_v1.csv').run()
+    exp = DeepOrdinalFactorizerExperiment(data_dir='data/megaattitude_v1.csv').run()
