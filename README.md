@@ -24,7 +24,7 @@ You can also clone and use the included `setup.py`.
 
 ```bash
 git clone https://github.com/aaronstevenwhite/MegaAttitudeProject
-cd CHILDESPy
+cd MegaAttitudeProject
 python setup.py install
 ```
 
