@@ -10,20 +10,20 @@ This package implements White & Rawlins' (2016) computational model of s(emantic
 
 White, A. S. & K. Rawlins. 2016. [A computational model of S-selection](http://aswhite.net/media/papers/white_computational_2016_salt.pdf). In M. Moroney, C-R. Little, J. Collard & D. Burgdorf (eds.), *Semantics and Linguistic Theory* 26, 641-663. Ithaca, NY: CLC Publications.
 
-If you make use of this data set in a presentation or publication, we ask that you please cite this paper.
+If you make use of this code or the included dataset in a presentation or publication, we ask that you please cite this paper.
 
 ## Installation
 
 To install, simply use `pip`.
 
 ```bash
-sudo pip install git+git://github.com/aaronstevenwhite/CHILDESPy.git
+sudo pip install git+git://github.com/aaronstevenwhite/MegaAttitudeProject.git
 ```
 
 You can also clone and use the included `setup.py`.
 
 ```bash
-git clone https://github.com/aaronstevenwhite/CHILDESPy
+git clone https://github.com/aaronstevenwhite/MegaAttitudeProject
 cd CHILDESPy
 python setup.py install
 ```
