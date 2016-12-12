@@ -17,5 +17,5 @@ class OrdinalModelExperiment(Experiment):
             m.write_params(directory)
 
 if __name__ == '__main__':
-    exp = OrdinalModelExperiment(data_dir='data/megaattitude_v1.csv')
+    exp = OrdinalModelExperiment()
     exp.run()

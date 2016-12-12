@@ -16,13 +16,13 @@ class DeepOrdinalFactorizerExperiment(Experiment):
                                                normalizer=normalizer).fit(maxiter=10000, tolerance=1.)
 
 
-        for i in range(6, 7):
+        for i in range(8, 9):
             print '\n', i, '\n'
             self.model[i] = DeepOrdinalFactorizer(self.data, #self.features,
                                                   num_of_typesigs=12,
                                                   num_of_types=i,
                                                   precision=precision,
-                                                  normalizer=self.factorizer[12]).fit(pretrainiter=100,
+                                                  normalizer=self.factorizer[12]).fit(pretrainiter=10,
                                                                                       maxiter=10000,
                                                                                       tolerance=-np.inf)
         
@@ -38,4 +38,4 @@ class DeepOrdinalFactorizerExperiment(Experiment):
             m.write_params(directory)
         
 if __name__ == '__main__':
-    exp = DeepOrdinalFactorizerExperiment(data_dir='data/megaattitude_v1.csv').run()
+    exp = DeepOrdinalFactorizerExperiment().run()

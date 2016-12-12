@@ -24,4 +24,4 @@ class OrdinalFactorizerExperiment(Experiment):
             m.write_params(directory)
         
 if __name__ == '__main__':
-    exp = OrdinalFactorizerExperiment(data_dir='data/megaattitude_v1.csv').run()
+    exp = OrdinalFactorizerExperiment().run()
