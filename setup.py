@@ -15,4 +15,7 @@ setup(name='MegaAttitudeProject',
                         'theano'],
       test_suite='nose.collector',
       tests_require=['nose'],
+      scripts=['bin/run_ordinal_model.py',
+               'bin/run_ordinal_factorizer.py',
+               'bin/run_deep_ordinal_factorizer.py'],
       zip_safe=False)
