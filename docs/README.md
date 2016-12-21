@@ -1,5 +1,1 @@
-This is as Jekyll theme built to make single page websites, articles, or literary masterpieces readable anywhere.
-
-### [Demo and Documentation](https://adueck.github.io/good-clean-read)
-
-Built on top of <a href="http://chibicode.github.io/solo">Solo</a>, by [Shu Uesugi](https://github.com/chibicode)
+This directory contains the [MegaAttitude Project website](http://megaattitude.com), which is powered by jekyll and based on the [Adam Dueck](http://www.adamdueck.com/)'s [Good Clean Read](https://adueck.github.io/good-clean-read) template, a modification of [Shu Uesugi](https://github.com/chibicode)'s [Solo](http://chibicode.github.io/solo) template.
