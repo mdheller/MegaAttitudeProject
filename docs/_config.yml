@@ -3,9 +3,9 @@ title: The MegaAttitude Project
 tag_text: The MegaAttitude Project
 description: Lexicon-scale investigations of the syntax and semantics of clause-embedding
 url: "http://127.0.0.1:4000"
-dataurl: https://github.com/aaronstevenwhite/MegaAttitudeProject/archive/v1.0.zip
-codeurl: https://github.com/aaronstevenwhite/MegaAttitudeProject/archive/master.zip
-githuburl: https://github.com/aaronstevenwhite/MegaAttitudeProject
+dataurl: "https://github.com/aaronstevenwhite/MegaAttitudeProject/archive/v1.0.zip"
+codeurl: "https://github.com/aaronstevenwhite/MegaAttitudeProject/archive/master.zip"
+githuburl: "https://github.com/aaronstevenwhite/MegaAttitudeProject"
 baseurl: ""
 
 font-awesome-include: true # make this false if you don't need font-awesome
