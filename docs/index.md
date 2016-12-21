@@ -12,9 +12,9 @@ The computational modeling component aims to develop methods for analyzing data 
 
 ### What have we released?
 
-The MegaAttitude dataset (v1.0), which is described in [White & Rawlins 2016](http://aswhite.net/media/papers/white_computational_2016_salt.pdf) was released on October 30, 2016. You can get it [here](https://github.com/aaronstevenwhite/MegaAttitudeProject/archive/v1.0.zip).
+The MegaAttitude dataset (v1.0), which is described in [White & Rawlins 2016](http://aswhite.net/media/papers/white_computational_2016_salt.pdf) was released on October 30, 2016. You can get it [here]({{ site.dataurl }}).
 
-An implementation of the model described in [White & Rawlins 2016](http://aswhite.net/media/papers/white_computational_2016_salt.pdf), as well as various extensions, is available as a pre-release version. You can get it [here](https://github.com/aaronstevenwhite/MegaAttitudeProject/archive/master.zip) or you can clone the MegaAttitude Project [github repository](https://github.com/aaronstevenwhite/MegaAttitudeProject). 
+An implementation of the model described in [White & Rawlins 2016](http://aswhite.net/media/papers/white_computational_2016_salt.pdf), as well as various extensions, is available as a pre-release version. You can get it [here]({{ site.codeurl }}) or you can clone the MegaAttitude Project [github repository]({{ site.githuburl }}). 
 
 ### Citations
 
