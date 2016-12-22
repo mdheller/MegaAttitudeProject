@@ -1,6 +1,6 @@
 import numpy as np
 
-from projectionmodel import OrdinalModel, Experiment
+from megaattitude import OrdinalModel, Experiment
 
 class OrdinalModelExperiment(Experiment):
         
@@ -17,5 +17,7 @@ class OrdinalModelExperiment(Experiment):
             m.write_params(directory)
 
 if __name__ == '__main__':
-    exp = OrdinalModelExperiment()
+    exp = OrdinalModelExperiment(data_dir='data/megaattitude_v1.csv',
+                                 features_dir='data/features_asw_reduced.csv',
+                                 randomseed=5457)
     exp.run()

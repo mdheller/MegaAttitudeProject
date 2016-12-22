@@ -1,13 +1,10 @@
-import sys, os, re, argparse, itertools
 import numpy as np
-import scipy as sp
 import pandas as pd
 import theano
-import cPickle as pickle
 
 from theano import tensor as T
 
-from .utility import *
+from ..utility import *
 
 class OrdinalModel(object):
     '''

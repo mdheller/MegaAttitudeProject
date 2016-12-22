@@ -1,15 +1,12 @@
-import sys, os, re, argparse, itertools
 import numpy as np
-import scipy as sp
 import pandas as pd
 import theano
-import cPickle as pickle
 
 from theano import tensor as T
 
 from sklearn.decomposition import NMF
 
-from .utility import *
+from ..utility import *
 from .ordinalfactorizer import OrdinalFactorizer
 
 class DeepOrdinalFactorizer(OrdinalFactorizer):

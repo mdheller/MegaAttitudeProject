@@ -1,4 +1,4 @@
-from projectionmodel import OrdinalModel, OrdinalFactorizer, Experiment
+from megaattitude import OrdinalModel, OrdinalFactorizer, Experiment
 
 class OrdinalFactorizerExperiment(Experiment):
         
@@ -24,4 +24,7 @@ class OrdinalFactorizerExperiment(Experiment):
             m.write_params(directory)
         
 if __name__ == '__main__':
-    exp = OrdinalFactorizerExperiment().run()
+    exp = OrdinalFactorizerExperiment(data_dir='data/megaattitude_v1.csv',
+                                      features_dir='data/features_asw_reduced.csv',
+                                      randomseed=5457)
+    exp.run()

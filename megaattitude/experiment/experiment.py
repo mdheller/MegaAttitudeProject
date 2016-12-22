@@ -5,9 +5,7 @@ import theano
 
 class Experiment(object):
 
-    def __init__(self, data_dir='../bin/data/megaattitude_v1.csv',
-                 features_dir='../bin/data/features_asw_reduced.csv',
-                 randomseed=5457):
+    def __init__(self, data_dir, features_dir, randomseed):
 
         np.random.seed(randomseed)
 
