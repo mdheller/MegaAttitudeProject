@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import theano
@@ -56,14 +57,23 @@ class OrdinalModel(object):
             self._unpack_feature_data()
         
     def _unpack_acceptability_data(self):
+        '''
+        Convert subject, verb, and frame identifiers to categorical variables,
+        map the levels of those categorical variables to indices, and wrap
+        the indices in a theano shared variable, then extract the unique number
+        of indices for each variable
+        '''
         
         self.subj = self.data.participant.astype('category')
         self.verb = self.data.verb.astype('category')
         self.framevoice = self.data.framevoice.astype('category')
 
-        self.subj_codes = theano.shared(np.array(self.subj.cat.codes), name=self.ident+'subjcodes')
-        self.verb_codes = theano.shared(np.array(self.verb.cat.codes), name=self.ident+'verbcodes')
-        self.frame_codes = theano.shared(np.array(self.framevoice.cat.codes), name=self.ident+'framecodes')
+        self.subj_codes = theano.shared(np.array(self.subj.cat.codes),
+                                        name=self.ident+'subjcodes')
+        self.verb_codes = theano.shared(np.array(self.verb.cat.codes),
+                                        name=self.ident+'verbcodes')
+        self.frame_codes = theano.shared(np.array(self.framevoice.cat.codes),
+                                         name=self.ident+'framecodes')
                 
         self.response = np.array(self.data.response)
 
@@ -73,6 +83,10 @@ class OrdinalModel(object):
         self.num_of_frames = self.framevoice.cat.categories.shape[0]
 
     def _unpack_feature_data(self):
+        '''
+        Convert the featue matrix to a numpy array and extract the unique number
+        of indices for each variable
+        '''
         self.feature_names = self.syntactic_features.index
         self.features = np.array(self.syntactic_features)
 
@@ -80,7 +94,10 @@ class OrdinalModel(object):
 
         
     def _initialize_model(self, stochastic):
-        '''Initialize the model by constructing latent variables, loss functions, and updaters.'''
+        '''
+        Initialize the model by constructing latent variables, loss functions, 
+        and updaters.
+        '''
         
         self.representations = {}
         
@@ -107,8 +124,7 @@ class OrdinalModel(object):
             self._verb_features = logisticT(verb_features_t)
              
             features_t = theano.shared(self.features, name=self.ident+'features')
-
-            
+    
             if self.kerneldim:
                 noise_map = np.random.normal(0., 0.1, size=[self.kerneldim, self.num_of_features])
                 
@@ -193,33 +209,31 @@ class OrdinalModel(object):
 
         raise NotImplementedError('Stochastic gradient descent is not currently implemented.')
         
-        cuts = self._initialize_cutpoints()
+        # cuts = self._initialize_cutpoints()
         
         ## TODO: this method should be replaced with a RandomStream-based method
-        order = theano.shared(np.random.choice(self.data.shape[0], size=1e6), name=self.ident+'order')
+        # order = theano.shared(np.random.choice(self.data.shape[0], size=1e6), name=self.ident+'order')
 
-        indices = order[T.arange((self.itr*stochastic)%int(1e6), ((self.itr+1)*stochastic)%int(1e6))]
+        # indices = order[T.arange((self.itr*stochastic)%int(1e6), ((self.itr+1)*stochastic)%int(1e6))]
 
-        upper = cuts[self.subj_codes[indices], response[indices]] -\
-                self._acceptability[self.verb_codes[indices], self.frame_codes[indices]]
+        # upper = cuts[self.subj_codes[indices], response[indices]] -\
+        #         self._acceptability[self.verb_codes[indices], self.frame_codes[indices]]
 
-        lower = cuts[self.subj_codes[indices], response[indices]-1] -\
-                self._acceptability[self.verb_codes[indices], self.frame_codes[indices]]
+        # lower = cuts[self.subj_codes[indices], response[indices]-1] -\
+        #         self._acceptability[self.verb_codes[indices], self.frame_codes[indices]]
 
-        probhigh = T.switch(T.lt(response[indices], response_max),
-                            logisticT(upper),
-                            1.)
+        # probhigh = T.switch(T.lt(response[indices], response_max),
+        #                     logisticT(upper),
+        #                     1.)
 
-        problow = T.switch(T.gt(response[indices], response_min),
-                           logisticT(lower),
-                           0.)
+        # problow = T.switch(T.gt(response[indices], response_min),
+        #                    logisticT(lower),
+        #                    0.)
 
-        self.loglike = T.sum(T.log(probhigh-problow+1e-20))
-        self.loglike_batch = self._create_loglike_batch()
+        # self.loglike = T.sum(T.log(probhigh-problow+1e-20))
+        # self.loglike_batch = self._create_loglike_batch()
 
-    def _initialize_cutpoints(self):
-        '''Initialize the cutpoints for the cumulative link logit model.'''
-        
+    def _create_offset_and_jumps(self):
         offset_t = theano.shared(np.zeros(self.num_of_subjects), name=self.ident+'offset')
         
         jumps_aux = np.zeros([self.num_of_subjects, np.max(self.response)-1])
@@ -227,6 +241,13 @@ class OrdinalModel(object):
         jumps_aux = np.append(jumps_aux, np.zeros([jumps_aux.shape[0],1])-np.inf, axis=1)
         
         jumps_aux_t = theano.shared(jumps_aux, name=self.ident+'jumps')
+
+        return offset_t, jumps_aux_t
+        
+    def _initialize_cutpoints(self):
+        '''Initialize the cutpoints for the cumulative link logit model.'''
+        
+        offset_t, jumps_aux_t = self._create_offset_and_jumps()
         
         jumps = T.exp(jumps_aux_t)
 
@@ -249,6 +270,7 @@ class OrdinalModel(object):
         '''
         
         probhigh_batch, problow_batch = self._initialize_likelihood_batch()
+
         return T.sum(T.log(probhigh_batch-problow_batch+1e-20))
 
     def _create_compute_likelihood(self):
@@ -267,6 +289,7 @@ class OrdinalModel(object):
         Create the loss function.
 
         Note: this will get overridden in subclasses where the model is multiview
+              or involves some prior
         '''
         
         self.loss = self.loglike
@@ -287,16 +310,25 @@ class OrdinalModel(object):
 
 
     def _create_update_dicts(self, representations, stochastic):
+        '''Create the dictionaries (as lists of tuples) that theano.update uses'''
+        
         update_dict_gd = []
         update_dict_ada = []
         
         for name, rep in representations.items():
+            ## compute gradient for current representation
             temp_grad = T.grad(self.loss, rep)
+
+            ## clip gradient to avoid overflow
             rep_grad = T.switch(T.or_(rep > 10, rep < -10),
                                 np.zeros(rep.shape.eval()), 
                                 temp_grad)
 
-            rep_grad_hist_t = theano.shared(np.ones(rep.shape.eval()), name=self.ident+name+'_hist')
+            ## create a variable to store gradient history for adagrad
+            rep_grad_hist_t = theano.shared(np.ones(rep.shape.eval()),
+                                            name=self.ident+name+'_hist')
+
+            ## create adagrad adjusted gradient
             rep_grad_adj = rep_grad / (T.sqrt(rep_grad_hist_t))
 
             if stochastic:
@@ -425,5 +457,5 @@ class OrdinalModel(object):
         return cutpoints
 
     def write_params(self):
-        self.acceptability.to_csv('params/acceptability_normalized.csv')
-        self.cutpoints.to_csv('params/cutpoints.csv')
+        self.acceptability.to_csv(os.path.join(directory, 'acceptability_normalized.csv'))
+        self.cutpoints.to_csv(os.path.join(directory, 'cutpoints.csv'))

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import theano
@@ -107,7 +108,7 @@ class OrdinalFactorizer(OrdinalModel):
             
             self._acceptability = logitT(acceptability / self.num_of_features)
 
-    def _initialize_cutpoints(self):
+    def _create_offset_and_jumps(self):
         
         if self._normalizer is None:
             offset_t = theano.shared(np.zeros(self.num_of_subjects), name=self.ident+'offset')
@@ -122,18 +123,9 @@ class OrdinalFactorizer(OrdinalModel):
             jumps_aux = self._normalizer.representations['jumps'].eval()
 
         jumps_aux_t = theano.shared(jumps_aux, name=self.ident+'jumps')
-        jumps = T.exp(jumps_aux_t)
 
-        self.representations['jumps'] = jumps_aux_t
-        self.representations['offset'] = offset_t
-
-        cutpoints_unshifted = T.extra_ops.cumsum(jumps, axis=1)
-
-        response_max = np.max(self.response)
-        midindex = int(response_max)/2
+        return offset_t, jumps_aux_t        
         
-        return cutpoints_unshifted - cutpoints_unshifted[:,midindex][:,None] - offset_t[:,None]
-
     def _initialize_updaters(self, stochastic):
         '''Initialize the theano updater functions in a generic way.'''
 
@@ -152,11 +144,12 @@ class OrdinalFactorizer(OrdinalModel):
                                                      name=self.ident+'updater_ada_pretrain')
 
         
-    def fit(self, pretrainiter=10, maxiter=15000, tolerance=0.01, stochastic=0, verbose=100):
+    def fit(self, pretrainiter=0, maxiter=15000, tolerance=0.01, stochastic=0, verbose=100):
         '''
         Fit the model.
 
         Params
+        pretrainiter (int): number of iterations to pretrain model
         maxiter      (int): maximum number of iterations if tolerance is not reached
         tolerance  (float): stopping threshold for average step-size over 10 iterations
         stochastic   (int): number of training instances per update in stochastic gradient descent

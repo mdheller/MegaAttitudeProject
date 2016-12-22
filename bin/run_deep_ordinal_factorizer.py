@@ -11,24 +11,21 @@ class DeepOrdinalFactorizerExperiment(Experiment):
 
         normalizer = OrdinalModel(self.data).fit(maxiter=10000, tolerance=10.)
 
-        self.factorizer[12] = OrdinalFactorizer(self.data, #self.features,
-                                               num_of_typesigs=12,
-                                               normalizer=normalizer).fit(maxiter=10000, tolerance=1.)
-
-
-        for i in range(8, 9):
+        for i in range(2, max_num_of_typesigs+1):
             print '\n', i, '\n'
-            self.model[i] = DeepOrdinalFactorizer(self.data, #self.features,
-                                                  num_of_typesigs=12,
-                                                  num_of_types=i,
-                                                  precision=precision,
-                                                  normalizer=self.factorizer[12]).fit(pretrainiter=10,
-                                                                                      maxiter=10000,
-                                                                                      tolerance=-np.inf)
-        
-        # for i in range(2, max_num_of_typesigs+1):
-        #     self.model[i] = OrdinalFactorizer(self.data, #self.features,
-        #                                       num_of_typesigs=i).fit(maxiter=1000, tolerance=0.01)
+            
+            self.factorizer[i] = OrdinalFactorizer(self.data, #self.features,
+                                       num_of_typesigs=12,
+                                       normalizer=normalizer).fit(maxiter=10000, tolerance=1.)
+
+            for j in range(2, max_num_of_types+1):
+                self.model[j] = DeepOrdinalFactorizer(self.data, #self.features,
+                                                      num_of_typesigs=i,
+                                                      num_of_types=j,
+                                                      precision=precision,
+                                                      normalizer=self.factorizer[i]).fit(pretrainiter=10,
+                                                                                         maxiter=10000,
+                                                                                         tolerance=-np.inf)
 
         return self
             
